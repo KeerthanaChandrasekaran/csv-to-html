@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    </head>
+    <body>
+        <p>Select local CSV File:</p>
+        <input id="csv" type="file"><br/>
+        <table border='2' id="myTable">
+        </table>
+        <script>
+            
+           var fileInput = document.getElementById("csv");
+            // console.log(fileInput.files[0].name)
+
+            fileInput.addEventListener('change', function(e){
+                var reader = new FileReader();
+                
+                reader.onload = function () {
+                    var content = reader.result.split('\n')
+                    console.log(content)
+                    for(var i=0;i<content.length;i++){
+                        var row = document.getElementById('myTable').insertRow(i);
+                        var data = content[i].split(',')
+                        for(var j=0;j<data.length;j++){
+                            var cell = row.insertCell(j)
+                            cell.innerHTML = data[j]
+                        }
+                    }
+                    
+                };
+                // start reading the file. When it is done, calls the onload event defined above.
+                reader.readAsBinaryString(e.target.files[0])
+                
+            },false);
+        </script>
+    </body>
+</html>
